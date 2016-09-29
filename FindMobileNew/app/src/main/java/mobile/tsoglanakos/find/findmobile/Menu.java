@@ -51,7 +51,7 @@ public class Menu extends Activity {
 	private static boolean isRestarted = false;
 
 	// private boolean isActive = false;
-
+	static boolean isRunning = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -210,11 +210,7 @@ public class Menu extends Activity {
 				// isActive = false;
 				startEffects = false;
 				isNotPlay_ressetMp();
-				runOnUiThread(new Thread() {
-					public void run() {
-						imView.setBackgroundColor(getResources().getColor(R.color.transparent_white_percent_95));
-					}
-				});
+
 
 			}
 
@@ -311,6 +307,7 @@ public class Menu extends Activity {
 					// isActive = true;
 					fst = new Thread(new ServerThread());
 					fst.setDaemon(true);
+
 					fst.start();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -494,7 +491,7 @@ public class Menu extends Activity {
 				}
 
 				// SERVERIP = getLocalIpAddress();
-				boolean isRunning = true;
+
 				if (enable != null)
 					isRunning = enable.isChecked();
 				while (isRunning) {
@@ -538,10 +535,12 @@ public class Menu extends Activity {
 						audioPlayer("pettie.mp3");
 						lightTheScreen();
 					} catch (Exception e) {
+						e.printStackTrace();
 						if (serverSocket==null||serverSocket.isClosed()) {
 							try {
 								serverSocket = new ServerSocket(PORT);
 							} catch (Exception exx) {
+								exx.printStackTrace();
 							}
 						}
 					}
